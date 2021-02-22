@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Add User</title>
+  </head>
+  <body>
+    <app-user-form
+      [heading]="heading"
+      [editMode]="editMode"
+      [user]="user"
+      [process]="updateUser.bind(this)"
+      [errors]="errors"
+    ></app-user-form>
+  </body>
+</html>

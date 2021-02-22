@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <app-header></app-header>
+  <div class="pt-5 row justify-content-center">
+    <div class="col-md-8">
+      <div class="mb-2" *ngIf="userRoles.includes('ROLE_SUPERADMIN')">
+        <a routerLink="/adduser">Add new user</a>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Login</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Role</th>
+            <th *ngIf="userRoles.includes('ROLE_SUPERADMIN')">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.login }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.birthday | ageformat }}</td>
+            <td>{{ user.role }}</td>
+            <td *ngIf="userRoles.includes('ROLE_SUPERADMIN')">
+              <a
+                href="#"
+                class="link edit-button"
+                [routerLink]="['edituser', user.login]"
+                >Edit</a
+              >
+              <a href="#" class="link" (click)="open(mymodal, user.login)"
+                >Delete</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure?</p>
+  </div>
+  <div class="modal-footer">
+    <form id="userDeleteForm" action="/admin/delete" method="post">
+      <input type="hidden" name="userLogin" id="userLoginHiddenInput" />
+      <button
+        (click)="modal.close('Confirmed delete')"
+        type="button"
+        class="btn btn-primary"
+      >
+        Yes
+      </button>
+    </form>
+    <button
+      (click)="modal.dismiss('Cancel delete')"
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+    >
+      No
+    </button>
+  </div>
+</ng-template>

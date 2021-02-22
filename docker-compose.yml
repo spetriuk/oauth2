@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  petriuk-h2db:
+    image: oscarfonts/h2:alpine
+    volumes:
+      - "./webservice/db:/opt/h2-data"
+  petriuk-app:
+    build: ./webservice
+    ports:
+      - "8080:8080"
+    depends_on:
+      - petriuk-h2db
+  petriuk-angular-app:
+    build: ./angular-app
+    depends_on:
+      - petriuk-app
+    ports:
+      - "4200:4200"
+  petriuk-keycloak:
+    image: quay.io/keycloak/keycloak:12.0.3
+    volumes:
+      - ./keycloak:/opt/jboss/keycloak/imports
+    command: 
+      -Djboss.socket.binding.port-offset=10 -Dkeycloak.forceBackendUrlToFrontendUrl=true
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_FRONTEND_URL=http://localhost:8090/auth
+      - KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/usersapp-realm.json
+      - CLIENT_URL=http://localhost:4200
+    ports:
+      - 8090:8090

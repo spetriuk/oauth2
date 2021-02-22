@@ -1,0 +1,17 @@
+<header>
+  <nav class="navbar navbar-expand-sm bg-light rounded">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <span class="navbar-text">{{ firstName }} {{ lastName }}</span>
+      </li>
+      <li class="nav-item" type="submit">
+        <a
+          *ngIf="keycloakService.isLoggedIn()"
+          (click)="keycloakService.logout()"
+          class="nav-link"
+          >Logout</a
+        >
+      </li>
+    </ul>
+  </nav>
+</header>

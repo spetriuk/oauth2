@@ -1,0 +1,127 @@
+<div class="container-fluid">
+  <app-header></app-header>
+  <div class="row justify-content-center">
+    <h2 class="text-center">{{ heading }}</h2>
+  </div>
+  <div class="pt-5 row justify-content-center">
+    <form class="col-12 col-md-8">
+      <div class="form-group row">
+        <label class="col" for="login">Login</label>
+        <div class="col">
+          <input
+            class="form-control col"
+            type="text"
+            id="login"
+            name="login"
+            [(ngModel)]="user.login"
+            [readonly]="editMode"
+          />
+          <span class="text-danger">{{ errors.login }}</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col" for="password">Password</label>
+        <div class="col">
+          <input
+            class="form-control col"
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="user.password"
+          />
+          <span class="text-danger">{{ errors.password }}</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col" for="password2">Password again</label>
+        <div class="col">
+          <input
+            class="form-control col"
+            type="password"
+            id="password2"
+            name="password2"
+            [(ngModel)]="user.password2"
+          />
+          <span class="text-danger">{{ errors.password2 }}</span>
+          <span class="text-danger">{{ errors.passwordMatches }}</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col" for="email">email</label>
+        <div class="col">
+          <input
+            class="form-control col"
+            type="text"
+            id="email"
+            name="email"
+            [(ngModel)]="user.email"
+          />
+          <span class="text-danger">{{ errors.email }}</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col" for="firstName">First name</label>
+        <div class="col">
+          <input
+            class="form-control col"
+            type="text"
+            id="firstName"
+            name="firstName"
+            [(ngModel)]="user.firstName"
+          />
+          <span class="text-danger">{{ errors.firstName }}</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col" for="lastName">Last Name</label>
+        <div class="col">
+          <input
+            class="form-control col"
+            type="text"
+            id="lastName"
+            name="lastName"
+            [(ngModel)]="user.lastName"
+          />
+          <span class="text-danger">{{ errors.lastName }}</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col" for="birthday">Birth Date</label>
+        <div class="col">
+          <input
+            class="form-control col"
+            type="text"
+            id="birthday"
+            name="birthday"
+            [(ngModel)]="user.birthday"
+          />
+          <span class="text-danger">{{ errors.birthday }}</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col" for="role">Role</label>
+        <div class="col">
+          <select
+            [(ngModel)]="user.role"
+            class="form-control col"
+            id="role"
+            name="role"
+          >
+            <option
+              *ngFor="let role of roles"
+              [value]="role"
+              [selected]="user.role === role"
+            >
+              {{ role }}
+            </option>
+          </select>
+          <span class="text-danger">{{ errors.role }}</span>
+        </div>
+      </div>
+      <a routerLink="/" class="btn btn-info cancel-button" role="button"
+        >Cancel</a
+      >
+      <button (click)="process()" class="btn btn-success">Save</button>
+    </form>
+  </div>
+</div>
