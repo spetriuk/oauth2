@@ -4,19 +4,8 @@ services:
   petriuk-h2db:
     image: oscarfonts/h2:alpine
     volumes:
-      - "./webservice/db:/opt/h2-data"
-  petriuk-app:
-    build: ./webservice
-    ports:
-      - "8080:8080"
-    depends_on:
-      - petriuk-h2db
-  petriuk-angular-app:
-    build: ./angular-app
-    depends_on:
-      - petriuk-app
-    ports:
-      - "4200:4200"
+      - "./db:/opt/h2-data"
+
   petriuk-keycloak:
     image: quay.io/keycloak/keycloak:12.0.3
     volumes:
@@ -31,3 +20,29 @@ services:
       - CLIENT_URL=http://localhost:4200
     ports:
       - 8090:8090
+
+  petriuk-roles-api:
+    build: ./roles-api
+    ports:
+      - "8070:8080"
+    depends_on:
+      - petriuk-h2db
+      - petriuk-keycloak
+
+  petriuk-users-api:
+    build: ./users-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - petriuk-h2db
+      - petriuk-roles-api
+      - petriuk-keycloak
+
+  petriuk-angular-app:
+    build: ./angular-app
+    depends_on:
+      - petriuk-users-api
+      - petriuk-roles-api
+      - petriuk-keycloak
+    ports:
+      - "4200:4200"
