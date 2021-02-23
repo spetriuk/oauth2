@@ -1,6 +1,5 @@
 package com.petriuk.dto;
 
-import com.petriuk.entity.Role;
 import com.petriuk.entity.User;
 import com.petriuk.validation.PasswordMatches;
 
@@ -70,13 +69,13 @@ public class UserDto {
     @NotNull(groups = { UserDto.EditGroup.class, UserDto.CreateGroup.class })
     private String role;
 
-    public UserDto(User user) {
-        login = user.getLogin();
-        email = user.getEmail();
-        firstName = user.getFirstName();
-        lastName = user.getLastName();
-        birthday = user.getBirthday().toString();
-        role = user.getRole().getName();
+    public UserDto(User user, String role) {
+        this.login = user.getLogin();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.birthday = user.getBirthday().toString();
+        this.role = role;
     }
 
     public UserDto() {
@@ -148,7 +147,7 @@ public class UserDto {
 
     public User makeUser() {
         return new User(login, password, email, firstName, lastName,
-            Date.valueOf(birthday), new Role(role));
+            Date.valueOf(birthday));
     }
 
     @Override

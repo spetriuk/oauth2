@@ -44,20 +44,13 @@ public class UserResource extends SpringBeanAutowiringSupport {
         return userService.getAllUsersAsDto();
     }
 
-    @GET
-    @Path("roles")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getAllRoles() {
-        return userService.getAllRoles();
-    }
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(
         @Valid @ConvertGroup(to = UserDto.CreateGroup.class) UserDto userDto,
         @Context UriInfo uriInfo) {
         try {
-            userService.addUser(userDto.makeUser());
+            userService.addUser(userDto);
         } catch (UserExistException e) {
             return Response.status(Response.Status.CONFLICT).build();
         }
@@ -74,7 +67,7 @@ public class UserResource extends SpringBeanAutowiringSupport {
         @Valid @ConvertGroup(to = UserDto.EditGroup.class) UserDto userDto,
         @Context UriInfo uriInfo) {
 
-        userService.updateUser(userDto.makeUser());
+        userService.updateUser(userDto);
 
         return Response.status(Response.Status.NO_CONTENT.getStatusCode())
             .header("Location", String
