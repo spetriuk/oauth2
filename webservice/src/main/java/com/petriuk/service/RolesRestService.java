@@ -1,18 +1,21 @@
 package com.petriuk.service;
 
 import com.petriuk.dto.RoleDto;
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class RolesRestService {
-    private static final String baseUrl = "http://roles-api:8080/roles/";
-    private static final RestTemplate restTemplate = new RestTemplate();
+    private static final String baseUrl = "http://petriuk-roles-api:8080/roles/";
+
+    @Autowired
+    private KeycloakRestTemplate restTemplate;
 
     public String getRoleByUserId(Long userId) {
         ResponseEntity<String> response = restTemplate
