@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../model/user';
 
 const baseURL = 'http://localhost:8080/rest/user';
+const rolesUrl = 'http://localhost:8070/roles';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class UsersService {
   }
 
   getRoles(): Observable<any> {
-    return this.httpClient.get(baseURL + '/roles');
+    return this.httpClient.get(rolesUrl);
   }
 
   deleteUser(login: string): Observable<any> {
